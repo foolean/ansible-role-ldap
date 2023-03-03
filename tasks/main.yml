@@ -9,11 +9,22 @@
 - name: Role foolean/ldap
   block:
 
-    - name: Ensure LDAP client is not installed (CIS)
+    - name: CIS | Ensure LDAP client is not installed
       become: true
       ansible.builtin.package:
         name:
+          # RedHat packages
           - 'openldap-clients'
+          # Debian packages
+          - 'ldap-utils'
+        state: absent
+
+    - name: CIS | Ensure LDAP server is not installed
+      become: true
+      ansible.builtin.package:
+        name:
+          # Debian packages
+          - 'slapd'
         state: absent
 
   # Tags to be applied to this role (block)
